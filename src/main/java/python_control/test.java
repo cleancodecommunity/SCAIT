@@ -58,7 +58,7 @@ public class test {
 		  
 		  
 		  
-		  /*
+		  
 		  pyProject.getCalzes().forEach((a, b) -> {
 			 System.out.println(b.getName());
 			 System.out.println(b.getUniqueName());
@@ -83,7 +83,7 @@ public class test {
 			 });
 		  });
 		  
-		 */
+		 
 	  }
 	 
 	  

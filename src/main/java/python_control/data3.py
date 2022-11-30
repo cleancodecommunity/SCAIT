@@ -47,7 +47,7 @@ class c2:
         j=0
         
         
-    
+
 cc = c2()
 cc.g20()
 cc.g30()
@@ -62,4 +62,4 @@ class fery:
     def p2():
         return -1
     
-    
+

@@ -335,26 +335,34 @@ def classCallSolver(project, callees, classContainer):
                             
 def getRoot(node, claz, project):
     
+    callees = []
+
+    
+
     for subNode in ast.walk(ast.parse(node)):
+        
         if isinstance(subNode, ast.FunctionDef):
             getFunctionDef(subNode, claz, project)
+        
     
-    """
-    for subNode in getClassMembers(node):
-        if isinstance(subNode, ast.Assign):
-                left = subNode.targets[0]
-                if isinstance(subNode.value, ast.Call):
-                    newCall = callEntity.callEntity(subNode.value)
-                    newCall.setTarget(left)
-                    callees.append(newCall)
-                
-                
-        if isinstance(subNode, ast.Expr):
-            if isinstance(subNode.value, ast.Call):
-                newCall = callEntity.callEntity(subNode.value)
+    if isinstance(node, ast.Assign):                
+        left = node.targets[0]
+        if isinstance(node.value, ast.Call):
+                newCall = callEntity.callEntity(node.value)
+                newCall.setTarget(left)
                 callees.append(newCall)
-    newClass.setCallee(callees)
-    """
+                
+                
+    if isinstance(node, ast.Expr):
+        
+        if isinstance(node.value, ast.Call):
+            
+            newCall = callEntity.callEntity(node.value)
+            
+            callees.append(newCall)
+    
+    claz.setCallee(callees)
+    
     
 
 def main():
