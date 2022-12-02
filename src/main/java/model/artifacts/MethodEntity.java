@@ -40,6 +40,11 @@ public class MethodEntity implements Serializable, Entity {
 	private ArrayList<MethodEntity> IncomingMethods = new ArrayList<MethodEntity>();
 	private ArrayList<MethodEntity> OutgoingMethods = new ArrayList<MethodEntity>();
 	
+	private ArrayList<ClassEntity> IncomingClasses = new ArrayList<ClassEntity>();
+	private ArrayList<ClassEntity> OutgoingClasses = new ArrayList<ClassEntity>();
+	
+	
+	
 	private ArrayList<ConstructorEntity> IncomingConstructors = new ArrayList<ConstructorEntity>();
 	private ArrayList<ConstructorEntity> OutgoingConstructors = new ArrayList<ConstructorEntity>();
 	
@@ -88,6 +93,9 @@ public class MethodEntity implements Serializable, Entity {
 	public void addIncommingMethod(MethodEntity Caller) {
 		IncomingMethods.add(Caller);
 	}
+	public void addIncommingClass(ClassEntity Caller) {
+		IncomingClasses.add(Caller);
+	}
 	public void addIncommingConstructor(ConstructorEntity Caller) {
 		this.IncomingConstructors.add(Caller);
 	}
@@ -101,6 +109,9 @@ public class MethodEntity implements Serializable, Entity {
 	
 	public ArrayList<MethodEntity> getAllIncommingMethod() {
 		return IncomingMethods;
+	}
+	public ArrayList<ClassEntity> getAllIncommingClass() {
+		return this.IncomingClasses;
 	}
 	public ArrayList<ConstructorEntity> getAllIncommingConstructor() {
 		return this.IncomingConstructors;

@@ -69,11 +69,12 @@ public class ClassEntity implements Entity , Serializable{
 		
 	}
 	
-	public ClassEntity(Data project, String UniqueName, String name) {
+	public ClassEntity(Data project, String UniqueName, String name, String code) {
 		this.UniqueName = UniqueName;
 		this.name = name;
 		this.project = project;
 		this.project.addCalss(UniqueName, this);
+		this.setCode(code);
 	}
 	
 	public ClassEntity(Data project, String UniqueName, String name, ResolvedReferenceTypeDeclaration res) { // this constructor is particulrarly for Java

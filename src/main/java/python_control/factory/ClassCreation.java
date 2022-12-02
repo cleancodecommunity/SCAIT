@@ -62,7 +62,7 @@ public class ClassCreation implements Serializable {
 						e.printStackTrace();
 				   }
 			}
-			ClassEntity newClass = new ClassEntity(this.project, kode+"."+fullName,  name);
+			ClassEntity newClass = new ClassEntity(this.project, kode+"."+fullName,  name, kode);
 			try {
 				addMethod(claz, newClass);
 			} catch (JSONException e) {
@@ -75,7 +75,18 @@ public class ClassCreation implements Serializable {
 		this.project.getMethods().forEach((a, b) -> {
 			
 			try {
-				addMethodCalls(this.allMethods.get(b.getCode()), b);
+				addMethodCallsMethod(this.allMethods.get(b.getCode()), b);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		});
+		
+		this.project.getCalzes().forEach((a, b) -> {
+			
+			try {
+				
+				addMethodCallsClass(this.allClasses.get(b.getCode()), b);
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -131,13 +142,12 @@ public class ClassCreation implements Serializable {
 	}
 	
 
-	public void addMethodCalls(JSONObject methObject, MethodEntity method) throws JSONException {
-		
+	public void addMethodCallsMethod(JSONObject methObject, MethodEntity method) throws JSONException {
 		
 		JSONArray outMethods = (JSONArray) methObject.get("outgoingMethods");
 		
 		this.project.getMethods().forEach((a, b) -> {
-		
+			
 			if(method.getCode().equals(b.getCode())) {
 				String kode;
 				
@@ -162,6 +172,42 @@ public class ClassCreation implements Serializable {
 	}
 	
 	
+	public void addMethodCallsClass(JSONObject methObject, ClassEntity Claz) throws JSONException {
+		
+		if(methObject.has("outgoingMethods")) {
+			JSONArray outMethods = (JSONArray) methObject.get("outgoingMethods");
+															   
+			
+			this.project.getCalzes().forEach((a, b) -> {
+				
+				if(Claz.getCode().equals(b.getCode())) {
+					String kode;
+					//System.out.println(Claz.getName()+"\t");
+					for(int i=0; i<outMethods.length(); i++) {
+						try {
+							
+							kode = ((JSONObject) outMethods.get(i)).get("?Code").toString();
+							
+							for(MethodEntity meth: this.project.getMethods().values()) {
+								
+								if(kode.equals( meth.getCode())) {
+									//if(Claz.getName().equals("?Root"))
+									//	System.out.println(Claz.getName()+"\t"+((JSONObject)outMethods.get(i)).get("?Code")+"\t");
+									Claz.addOutgoingMethod(meth);
+									meth.addIncommingClass(Claz);
+								}
+							}
+							
+						} catch (JSONException e) {
+							
+							e.printStackTrace();
+						}
+						
+					}
+				}
+			});
+		}
+	}
 	
 	  
 	  private  void objectTravers(Object object) throws JSONException {

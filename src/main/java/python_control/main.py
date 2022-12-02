@@ -22,7 +22,7 @@ import json
 from objectConvertor1 import convert 
 
 
-fileName ='/Users/farshad.toosi/eclipse-workspace/SCAIT1/src/main/java/python_control/data3.py'
+fileName ='/Users/farshad.toosi/eclipse-workspace/SCAIT/src/main/java/python_control/data3.py'
 
 data = ""
 with open(fileName, 'r') as file:
@@ -404,14 +404,15 @@ def main():
     print("***************")
     print("-----")
     
+
     if False:
         for met in project.getClasses():
             print(met.getName())
             
-            for outs in met.getCalleess():
-                print("-----",outs.getName())
-                print("-----",outs.getClassContainer().getName())
-            print("-----")
+            for outs in met.getOutgoings():
+                #print("-----",outs.getName())
+                #print("-----",outs.getClassContainer().getName())
+                print("-----", outs)
     
     
     

@@ -60,13 +60,14 @@ public class test {
 		  
 		  
 		  pyProject.getCalzes().forEach((a, b) -> {
+			  System.out.println("--------");
+				 
 			 System.out.println(b.getName());
 			 System.out.println(b.getUniqueName());
-			 System.out.println("--------");
 			 
-			 b.getAllOutgoingClasses().forEach(cl -> {
-				 System.out.println(b.getName()+"\t"+cl.getName());
-			 });
+			b.getAllOutgoingMethods().forEach(mm ->{
+				System.out.println("\t"+mm.getName());
+			});
 			 
 			 
 			 b.getAllMethods().forEach(met -> {
@@ -87,6 +88,8 @@ public class test {
 				 });
 				 
 			 });
+			 System.out.println("--------");
+			 
 		  });
 		  
 		 
