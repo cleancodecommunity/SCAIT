@@ -60,7 +60,7 @@ class classEntity():
         self.Callees.append(callee)
     
     def setCallee(self, callees):
-        self.Callees = callees
+        self.Callees.extend(callees)
     
     def getCalleess(self):
         return self.Callees

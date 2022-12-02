@@ -218,6 +218,7 @@ def methodCallSolver(project, callees, methodContainer):
     for callObj in callees:
         call  = callObj.getComponents()
         funcName = call["funcName"]
+        
         for method in  methodContainer.getClassContainer().getMethods():
             if funcName == method.getName():
                 if not (method.isStatic()) and not (methodContainer.isStatic()):
@@ -237,6 +238,8 @@ def methodCallSolver(project, callees, methodContainer):
     for callObj in callees:
         call  = callObj.getComponents()
         funcName = call["funcName"]
+        #print("+++",funcName, methodContainer.getName())
+        
         for method in  methodContainer.getClassContainer().getMethods():
             if funcName == method.getName():
                 if  (method.isStatic()) and  (methodContainer.isStatic()):
@@ -275,6 +278,7 @@ def methodCallSolver(project, callees, methodContainer):
             for claz in project.getClasses():
                     if Root == claz.getName():
                         if Root != methodContainer.getClassContainer().getName():
+                            #print('ROooott', claz.getName(), methodContainer.getName())
                             for method in claz.getMethods():
                                 if method.getName() == funcName:
                                     methodContainer.addOutgoingMethod(method)
@@ -301,6 +305,7 @@ def classCallSolver(project, callees, classContainer):
     for callObj in callees:
         call  = callObj.getComponents()
         funcName = call["funcName"]
+        
         if len(call["pref"]) == 1:
             ObjectOrClassName =call["pref"][0]
             if ObjectOrClassName != "self":
@@ -335,32 +340,47 @@ def classCallSolver(project, callees, classContainer):
                             
 def getRoot(node, claz, project):
     
+    callees = []
+
+    
+
     for subNode in ast.walk(ast.parse(node)):
+        
         if isinstance(subNode, ast.FunctionDef):
             getFunctionDef(subNode, claz, project)
+        
     
-    """
-    for subNode in getClassMembers(node):
-        if isinstance(subNode, ast.Assign):
-                left = subNode.targets[0]
-                if isinstance(subNode.value, ast.Call):
-                    newCall = callEntity.callEntity(subNode.value)
-                    newCall.setTarget(left)
-                    callees.append(newCall)
-                
-                
-        if isinstance(subNode, ast.Expr):
-            if isinstance(subNode.value, ast.Call):
-                newCall = callEntity.callEntity(subNode.value)
+    if isinstance(node, ast.Assign):                
+        left = node.targets[0]
+        if isinstance(node.value, ast.Call):
+                newCall = callEntity.callEntity(node.value)
+                newCall.setTarget(left)
                 callees.append(newCall)
-    newClass.setCallee(callees)
-    """
+                
+                
+    if isinstance(node, ast.Expr):
+        
+        if isinstance(node.value, ast.Call):
+            
+            newCall = callEntity.callEntity(node.value)
+            
+            callees.append(newCall)
+            #print(newCall.getComponents())
+            #claz.addOutgoingMethod(self, mth):
+
+    
+    claz.setCallee(callees)
+    
+    
+   
+    #print("----",claz.getCalleess())
     
 
 def main():
     project = Data.Data()
     
     Roote = classEntity.classEntity(Root, str(Root)+"-"+fileName, project)
+    
     
     for node in ast.walk(ast.parse(data)):
         if(isinstance(node, ast.ClassDef)):
@@ -369,8 +389,11 @@ def main():
     print("***************")
     for nn in getRootMembers(ast.parse(data)):
         getRoot(nn, Roote,  project)
-        
-    
+    """
+    for c1 in project.getClasses():
+        for c2 in c1.getCalleess():
+            print(c1.getName(), c2.getComponents())
+            """
     print("********Calls*******")
     for mt in project.getMethods():
         methodCallSolver(project, mt.getCalleess(), mt)
@@ -382,18 +405,19 @@ def main():
     print("-----")
     
     if False:
-        for met in project.getMethods():
+        for met in project.getClasses():
             print(met.getName())
-            print(met.getClassContainer().getName())
-            for outs in met.getOutgoings():
-                print(outs.getName())
-                print(outs.getClassContainer().getName())
+            
+            for outs in met.getCalleess():
+                print("-----",outs.getName())
+                print("-----",outs.getClassContainer().getName())
             print("-----")
     
     
     
+    
     kk = convert(project)
-    print(kk.getMembers())
+    #print(kk.getMembers())
     result = open("ObjectPython.txt", "w")
     result.write(str(kk.getMembers()))
     result.close()

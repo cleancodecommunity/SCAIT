@@ -47,6 +47,8 @@ public class ClassEntity implements Entity , Serializable{
 	private ArrayList<ClassEntity> outgoingClasses = new ArrayList<ClassEntity>();
 	
 	private ArrayList<MethodEntity> ContainedMethods = new ArrayList<MethodEntity>();
+	private ArrayList<MethodEntity> OutgoingMethods = new ArrayList<MethodEntity>();
+	private ArrayList<MethodEntity> IncomingMethods = new ArrayList<MethodEntity>();
 	private ArrayList<ConstructorEntity> ContainedConstructors = new ArrayList<ConstructorEntity>();
 	
 	
@@ -176,6 +178,22 @@ public class ClassEntity implements Entity , Serializable{
     
 	public ArrayList<MethodEntity> getAllMethods() {
 		return this.ContainedMethods;
+	}
+	
+	public void addIncomingMethod(MethodEntity method) {
+		this.IncomingMethods.add(method);
+	}
+    
+	public ArrayList<MethodEntity> getAllIncomingMethods() {
+		return this.IncomingMethods;
+	}
+	
+	public void addOutgoingMethod(MethodEntity method) {
+		this.OutgoingMethods.add(method);
+	}
+    
+	public ArrayList<MethodEntity> getAllOutgoingMethods() {
+		return this.OutgoingMethods;
 	}
 	
 	

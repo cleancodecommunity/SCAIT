@@ -63,6 +63,12 @@ public class test {
 			 System.out.println(b.getName());
 			 System.out.println(b.getUniqueName());
 			 System.out.println("--------");
+			 
+			 b.getAllOutgoingClasses().forEach(cl -> {
+				 System.out.println(b.getName()+"\t"+cl.getName());
+			 });
+			 
+			 
 			 b.getAllMethods().forEach(met -> {
 				 System.out.println("\t"+met.getName());
 				 System.out.println("\t"+met.getUniqueName());
