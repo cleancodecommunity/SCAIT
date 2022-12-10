@@ -3,7 +3,7 @@
 """
 Created on Fri Jul 22 20:14:08 2022
 
-@author: farshad.toosi
+@author: Farshad Ghassemi Toosi
 """
 import ast, itertools
 import re, importlib
@@ -22,7 +22,7 @@ import json
 from objectConvertor1 import convert 
 
 
-fileName ='/Users/farshad.toosi/eclipse-workspace/SCAIT1/src/main/java/python_control/data3.py'
+fileName ='/Users/farshad.toosi/eclipse-workspace/SCAIT/src/main/java/python_control/data3.py'
 
 data = ""
 with open(fileName, 'r') as file:
@@ -404,20 +404,21 @@ def main():
     print("***************")
     print("-----")
     
+
     if False:
         for met in project.getClasses():
             print(met.getName())
             
-            for outs in met.getCalleess():
-                print("-----",outs.getName())
-                print("-----",outs.getClassContainer().getName())
-            print("-----")
+            for outs in met.getOutgoings():
+                #print("-----",outs.getName())
+                #print("-----",outs.getClassContainer().getName())
+                print("-----", outs)
     
     
     
     
     kk = convert(project)
-    #print(kk.getMembers())
+    print(kk.getMembers())
     result = open("ObjectPython.txt", "w")
     result.write(str(kk.getMembers()))
     result.close()

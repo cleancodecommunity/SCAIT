@@ -22,7 +22,7 @@ import json
 from objectConvertor1 import convert 
 
 
-fileName ='/Users/farshad.toosi/eclipse-workspace/SCAIT/src/main/java/python_control/data3.py'
+fileName ='/Users/farshad.toosi/eclipse-workspace/SCAIT/src/main/java/python_control/pickle.py'
 
 data = ""
 with open(fileName, 'r') as file:
@@ -45,7 +45,7 @@ def getFunctionDef(node, claz, project):
     assgs = []
     for subNode in ast.walk(ast.parse(node)):
         if isinstance(subNode, ast.Return):
-            returnStmt = getReturn(subNode.value)
+            returnStmt = getReturn(subNode)
         if isinstance(subNode, ast.arguments):
             allArgs = getParametersNormal(subNode)
         
@@ -210,7 +210,7 @@ def methodCallSolver(project, callees, methodContainer):
         constructor = call["funcName"]
         if callObj.hasTarget():
             for claz in project.getClasses():
-                if claz.getName() == constructor: 
+                if claz.getName() == constructor and hasattr(callObj.getTarget(), 'id'): 
                     objects[callObj.getTarget().id] = constructor
         
     #print(objects)
@@ -223,7 +223,7 @@ def methodCallSolver(project, callees, methodContainer):
             if funcName == method.getName():
                 if not (method.isStatic()) and not (methodContainer.isStatic()):
                     if method.getClassContainer().getName() == methodContainer.getClassContainer().getName():
-                        if len(list(methodContainer.getSigniture().keys())) > 0:
+                        if len(list(methodContainer.getSigniture().keys())) > 0 and len(call['pref'])>0:
                             if call["pref"][0] == list(methodContainer.getSigniture().keys())[0]:
                                 methodContainer.addOutgoingMethod(method)
                                 method.addIncomingMethod(methodContainer)

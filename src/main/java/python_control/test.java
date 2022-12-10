@@ -41,7 +41,7 @@ public class test {
 		  
 		  
 		  String jsonString = "";
-		  File file = new File("/Users/farshad.toosi/eclipse-workspace/SCAIT1/src/main/java/python_control/ObjectPython.txt");
+		  File file = new File("/Users/farshad.toosi/eclipse-workspace/SCAIT/src/main/java/python_control/ObjectPython.txt");
 		  Scanner in = new Scanner(file);
 		  
 		  while (in.hasNextLine()) {
@@ -62,31 +62,57 @@ public class test {
 		  pyProject.getCalzes().forEach((a, b) -> {
 			  System.out.println("--------");
 				 
-			 System.out.println(b.getName());
-			 System.out.println(b.getUniqueName());
+			 System.out.println("Class Name:\t"+b.getName());
 			 
-			b.getAllOutgoingMethods().forEach(mm ->{
-				System.out.println("\t"+mm.getName());
-			});
+			 
+
+			
+
+
+			
+
+			 
+			
+			 b.getAllOutgoingMethods().forEach(mt -> {
+				 System.out.println("Outgoing Method Name:\t"+mt.getName());
+				 System.out.println("Outgoing Method Signiture:\t"+mt.getSigniture());
+				 System.out.println("Is Outgoing Method Private:\t"+mt.isPrivate());
+				 System.out.println("Is Outgoing Method Public:\t"+mt.isPublic());
+				 System.out.println("Is Outgoing Method Static:\t"+mt.isStatic());
+				 System.out.println("--");
+			 });
 			 
 			 
 			 b.getAllMethods().forEach(met -> {
-				 System.out.println("\t"+met.getName());
-				 System.out.println("\t"+met.getUniqueName());
-				 System.out.println("\t"+met.getSigniture());
-				 System.out.println("\t"+met.getLineNum());
-				 System.out.println("\t"+met.isPrivate());
-				 System.out.println("\t"+met.isPublic());
-				 System.out.println("\t"+met.isStatic());
+				 System.out.println("\tClass Method Name:\t"+met.getName());
+				 
+				 System.out.println("\tClass Method Signiture:\t"+met.getSigniture());
+				 System.out.println("\tIs Class Method Private:\t"+met.isPrivate());
+				 System.out.println("\tIs Class Method Public:\t"+met.isPublic());
+				 System.out.println("\tIs Class Method Static:\t"+met.isStatic());
 				 
 				 
-				 
-				 met.getAllOutgoingMethod().forEach(m -> {
-					 System.out.println("\t\t"+m.getName());
-					 System.out.println("\t\t"+m.getUniqueName());
-					 System.out.println("\t\t"+m.getSigniture());
+				 met.getAllIncommingMethod().forEach(inM -> {
+					 System.out.println("\t\tIncoming Method Name:\t"+inM.getName());
+					 System.out.println("\t\tIncoming Method Signiture:\t"+inM.getSigniture());
+					 System.out.println("\t\tIs Incoming Method Private:\t"+inM.isPrivate());
+					 System.out.println("\t\tIs Incoming Method Public:\t"+inM.isPublic());
+					 System.out.println("\t\tIs Incoming Method Static:\t"+inM.isStatic());
+					 System.out.println("\t\t--------");
 				 });
 				 
+				
+				 met.getAllOutgoingMethod().forEach(outM -> {
+					 System.out.println("\t\tOutgoing Method Name:\t"+outM.getName());
+					 System.out.println("\t\tOutgoing Method Signiture:\t"+outM.getSigniture());
+					 System.out.println("\t\tIs Outgoing Method Private:\t"+outM.isPrivate());
+					 System.out.println("\t\tIs Outgoing Method Public:\t"+outM.isPublic());
+					 System.out.println("\t\tIs Outgoing Method Static:\t"+outM.isStatic());
+					 System.out.println("\t\t--------");
+				 });
+				 
+				 
+				 System.out.println("\t--------");
 			 });
 			 System.out.println("--------");
 			 
