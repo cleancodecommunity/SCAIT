@@ -22,19 +22,9 @@ import json
 from objectConvertor1 import convert 
 
 
-fileName ='/Users/farshad.toosi/eclipse-workspace/SCAIT/src/main/java/python_control/pickle.py'
-
-data = ""
-with open(fileName, 'r') as file:
-    data = file.read()
-
-
 Root = "?Root"
 
-
 #print(ast.dump (ast.parse(data)))
-
-
 
 def getFunctionDef(node, claz, project):
     
@@ -423,9 +413,20 @@ def main():
     result.write(str(kk.getMembers()))
     result.close()
 
-    
-# Serializing json  
-#json_object = json.dumps(dictionary, indent = 4) 
+
+# Serializing json
+#json_object = json.dumps(dictionary, indent = 4)
 #print(json_object)
-        
-main()
+
+
+if __name__ == '__main__':
+
+    # To use: python src/main/java/python_control/main.py
+
+    fileName ='./src/main/java/python_control/pickle.py'
+
+    data = ""
+    with open(fileName, 'r') as file:
+        data = file.read()
+
+    main()
