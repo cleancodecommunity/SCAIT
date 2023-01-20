@@ -122,7 +122,7 @@ def getParametersNormal(node): #TODO func(a, b, *args) also need to be done.
 
 
     
-def getClass(node, project):
+def getClass(fileName, node, project):
     
     newClass = classEntity.classEntity(str(node.name), str(node.name)+"-"+fileName, project)
     callees = []
@@ -366,7 +366,8 @@ def getRoot(node, claz, project):
     #print("----",claz.getCalleess())
     
 
-def main():
+def main(fileName, fileContents):
+    data = fileContents
     project = Data.Data()
     
     Roote = classEntity.classEntity(Root, str(Root)+"-"+fileName, project)
@@ -374,7 +375,7 @@ def main():
     
     for node in ast.walk(ast.parse(data)):
         if(isinstance(node, ast.ClassDef)):
-            getClass(node, project)
+            getClass(fileName, node, project)
     
     print("***************")
     for nn in getRootMembers(ast.parse(data)):
@@ -429,4 +430,4 @@ if __name__ == '__main__':
     with open(fileName, 'r') as file:
         data = file.read()
 
-    main()
+    main(fileName, data)
