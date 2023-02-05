@@ -189,9 +189,9 @@ def getRootMembers (node): # to get root members except classes and their belong
     
 
 def isStatic(node):
-    if(len(node.decorator_list)>0) and not (isinstance(node.decorator_list[0] , ast.Call)):
+    if(len(node.decorator_list)>0) and 'id' in node.decorator_list[0].__dict__:
         if node.decorator_list[0].id == "staticmethod":
-            return True
+                return True
     if len(node.args.args) == 0:
         return True
     else:
