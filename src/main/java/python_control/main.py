@@ -72,6 +72,7 @@ def getReturn(node):
     return returnStmt
     
 
+
 def getParametersNormal(node): #TODO func(a, b, *args) also need to be done.
     """
     allArgs = ""
@@ -100,15 +101,38 @@ def getParametersNormal(node): #TODO func(a, b, *args) also need to be done.
         
         
     if node.kwarg != None:
+        print("Nameeee\t",str(node.kwarg.arg))
         allArgs[str(node.kwarg.arg)] = "-kwarg*"
     
         
     for subNode in node.defaults:
-        allArgs[str(subNode.value)] = "-default"
-
         
+        
+        if isinstance( subNode, ast.UnaryOp):
+             allArgs[str(subNode.operand.value)] = "-default"
+            
+        elif isinstance( subNode, ast.Name):
+             allArgs[str(subNode.id)] = "-default"
+        elif isinstance( subNode, ast.Call):
+             
+             if isinstance(subNode.func, ast.Attribute):
+                 allArgs[str(subNode.func)] = "-default"
+             else:
+                 allArgs[str(subNode.func.id)] = "-default"
+        elif isinstance(subNode, ast.Lambda):
+                 
+            allArgs[str(subNode.body)] = "-default"
+            
+        elif isinstance(subNode, ast.Tuple):
+             allArgs[str(subNode)] = "-default"
+            
+        else:
+            
+            allArgs[str(subNode.value)] = "-default"
+            
         #print("....",subNode.arg)
     return allArgs
+
 
 
 
@@ -179,9 +203,9 @@ def getRootMembers (node): # to get root members except classes and their belong
     
 
 def isStatic(node):
-    if(len(node.decorator_list)>0):
+    if(len(node.decorator_list)>0) and 'id' in node.decorator_list[0].__dict__:
         if node.decorator_list[0].id == "staticmethod":
-            return True
+                return True
     if len(node.args.args) == 0:
         return True
     else:
