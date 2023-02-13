@@ -7,10 +7,7 @@ debug.txt
 debugg.txt
 
 # Repositories used for testing purposes only
-tests/python/adanet
-tests/python/autogluon
-tests/python/autokeras
-tests/python/Auto-PyTorch
+tests/python/repositories
 
 ####################################################
 ## Added from https://github.com/github/gitignore ##

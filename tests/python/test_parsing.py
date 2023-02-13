@@ -9,12 +9,9 @@ from main import main
 def fixture():
     """Basic fixture for tests"""
     python_file_paths = []
-    repository_paths = [
-        './src/main/java/python_control'
-        './tests/python/adanet',
-        './tests/python/Auto-PyTorch',
-        './tests/python/autogluon',
-        './tests/python/autokeras',
+    repo_dir = './tests/python/repositories/'
+    repository_paths = [ './src/main/java/python_control' ] + [
+        os.path.join(repo_dir, f) for f in os.listdir(repo_dir)
     ]
 
     for path in repository_paths:
