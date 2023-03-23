@@ -18,6 +18,9 @@ tests/python/repositories
 # Log file
 *.log
 
+# Visual Studio Code
+.vscode/
+
 # BlueJ files
 *.ctxt
 
